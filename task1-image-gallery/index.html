@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Image Gallery</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <h1>My Image Gallery</h1>
+
+  <!-- Grid of thumbnail images -->
+  <div class="gallery">
+    <img src="https://picsum.photos/id/1015/400/300" alt="Photo 1" onclick="openLightbox(0)">
+    <img src="https://picsum.photos/id/1016/400/300" alt="Photo 2" onclick="openLightbox(1)">
+    <img src="https://picsum.photos/id/1018/400/300" alt="Photo 3" onclick="openLightbox(2)">
+    <img src="https://picsum.photos/id/1019/400/300" alt="Photo 4" onclick="openLightbox(3)">
+    <img src="https://picsum.photos/id/1020/400/300" alt="Photo 5" onclick="openLightbox(4)">
+    <img src="https://picsum.photos/id/1021/400/300" alt="Photo 6" onclick="openLightbox(5)">
+  </div>
+
+  <!-- Lightbox (big view) popup, hidden by default -->
+  <div class="lightbox" id="lightbox">
+    <span class="close-btn" onclick="closeLightbox()">&times;</span>
+    <span class="nav-btn prev-btn" onclick="prevImage()">&#10094;</span>
+    <img id="lightbox-img" src="" alt="Large view">
+    <span class="nav-btn next-btn" onclick="nextImage()">&#10095;</span>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
