@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Night Radio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div class="player">
+
+    <!-- Spinning vinyl disc with the album art in the middle -->
+    <div class="disc-wrap">
+      <div class="disc" id="disc">
+        <img id="cover" src="" alt="Album cover">
+        <div class="disc-hole"></div>
+      </div>
+      <div class="tonearm" id="tonearm"></div>
+    </div>
+
+    <h2 id="title">Song Title</h2>
+    <p id="artist">Artist Name</p>
+
+    <!-- Progress bar -->
+    <div class="progress-container" onclick="seek(event)">
+      <div class="progress-bar" id="progress-bar"></div>
+    </div>
+    <div class="time-row">
+      <span id="current-time">0:00</span>
+      <span id="duration">0:00</span>
+    </div>
+
+    <!-- Playback controls -->
+    <div class="controls">
+      <button onclick="prevSong()" title="Previous">&#9198;</button>
+      <button id="play-btn" onclick="togglePlay()" title="Play/Pause">&#9658;</button>
+      <button onclick="nextSong()" title="Next">&#9197;</button>
+    </div>
+
+    <!-- Little animated bars, only "dance" while a song is playing -->
+    <div class="equalizer" id="equalizer">
+      <span></span><span></span><span></span><span></span>
+    </div>
+
+    <!-- Volume control -->
+    <div class="volume-row">
+      <span>&#128266;</span>
+      <input type="range" id="volume" min="0" max="1" step="0.01" value="0.8" onchange="changeVolume()">
+    </div>
+
+    <!-- Bonus: playlist -->
+    <p class="playlist-label">Up next</p>
+    <ul class="playlist" id="playlist"></ul>
+  </div>
+
+  <audio id="audio"></audio>
+
+  <script src="script.js"></script>
+</body>
+</html>

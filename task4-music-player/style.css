@@ -1,0 +1,284 @@
+/* ===== Design tokens =====
+   Deep charcoal background, warm amber accent (like a lit-up radio dial
+   in a dark room), soft coral for secondary highlights.
+   Fraunces (serif) for the song title = a bit of character/warmth.
+   Inter (sans) for everything else = clean and easy to read.
+*/
+:root {
+  --bg: #14141c;
+  --surface: #1e1e2a;
+  --amber: #f2b134;
+  --coral: #ff6f61;
+  --text: #f5f3ee;
+  --muted: #9a97ab;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: radial-gradient(circle at 50% 0%, #232332, var(--bg) 60%);
+  color: var(--text);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  margin: 0;
+  padding: 20px;
+}
+
+.player {
+  background: var(--surface);
+  border: 1px solid #2a2a3a;
+  border-radius: 20px;
+  padding: 30px 28px;
+  width: 320px;
+  text-align: center;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+}
+
+/* ---- Spinning vinyl disc ---- */
+.disc-wrap {
+  position: relative;
+  width: 220px;
+  height: 220px;
+  margin: 0 auto 20px;
+}
+
+.disc {
+  width: 220px;
+  height: 220px;
+  border-radius: 50%;
+  background: #0c0c12;
+  /* grooves, drawn with repeating rings */
+  background-image: repeating-radial-gradient(circle, #26263400 0px, #26263400 6px, #ffffff08 7px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+  animation: spin 6s linear infinite;
+  animation-play-state: paused; /* only spins while a song plays */
+}
+
+.disc.spinning {
+  animation-play-state: running;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+.disc img {
+  width: 130px;
+  height: 130px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 3px solid #14141c;
+}
+
+.disc-hole {
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  background: var(--bg);
+  border-radius: 50%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+/* A small tonearm resting on the record, tilts in when playing */
+.tonearm {
+  position: absolute;
+  top: -6px;
+  right: 6px;
+  width: 8px;
+  height: 90px;
+  background: linear-gradient(#c9c9d4, #7a7a8a);
+  border-radius: 4px;
+  transform-origin: top center;
+  transform: rotate(-25deg);
+  transition: transform 0.4s ease;
+}
+
+.tonearm.playing {
+  transform: rotate(-6deg);
+}
+
+/* ---- Text ---- */
+#title {
+  font-family: 'Fraunces', serif;
+  font-weight: 600;
+  font-size: 22px;
+  margin: 5px 0 2px;
+}
+
+#artist {
+  color: var(--muted);
+  font-size: 14px;
+  margin: 0 0 20px;
+}
+
+/* ---- Progress bar ---- */
+.progress-container {
+  background: #2c2c3c;
+  border-radius: 5px;
+  height: 6px;
+  width: 100%;
+  cursor: pointer;
+  margin-bottom: 6px;
+}
+
+.progress-bar {
+  background: var(--amber);
+  height: 100%;
+  width: 0%;
+  border-radius: 5px;
+  transition: width 0.1s linear;
+}
+
+.time-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  color: var(--muted);
+  margin-bottom: 18px;
+}
+
+/* ---- Controls ---- */
+.controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 18px;
+  margin-bottom: 14px;
+}
+
+.controls button {
+  background: transparent;
+  color: var(--text);
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  transition: color 0.2s ease, transform 0.1s ease;
+}
+
+.controls button:hover {
+  color: var(--amber);
+}
+
+.controls button:active {
+  transform: scale(0.9);
+}
+
+#play-btn {
+  background: var(--amber);
+  color: #14141c;
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#play-btn:hover {
+  color: #14141c;
+  background: var(--coral);
+}
+
+/* ---- Equalizer bars (only animate while playing) ---- */
+.equalizer {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  gap: 4px;
+  height: 18px;
+  margin-bottom: 18px;
+}
+
+.equalizer span {
+  width: 3px;
+  height: 4px;
+  background: var(--amber);
+  border-radius: 2px;
+}
+
+.equalizer.playing span {
+  animation: bounce 0.9s ease-in-out infinite;
+}
+
+.equalizer span:nth-child(1) { animation-delay: 0s; }
+.equalizer span:nth-child(2) { animation-delay: 0.15s; }
+.equalizer span:nth-child(3) { animation-delay: 0.3s; }
+.equalizer span:nth-child(4) { animation-delay: 0.45s; }
+
+@keyframes bounce {
+  0%, 100% { height: 4px; }
+  50% { height: 16px; }
+}
+
+/* ---- Volume ---- */
+.volume-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+  color: var(--muted);
+}
+
+.volume-row input[type="range"] {
+  flex: 1;
+  -webkit-appearance: none;
+  height: 4px;
+  border-radius: 2px;
+  background: #2c2c3c;
+  outline: none;
+}
+
+.volume-row input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--amber);
+  cursor: pointer;
+}
+
+/* ---- Playlist ---- */
+.playlist-label {
+  text-align: left;
+  font-size: 12px;
+  color: var(--muted);
+  margin: 0 0 8px;
+}
+
+.playlist {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  max-height: 130px;
+  overflow-y: auto;
+  text-align: left;
+}
+
+.playlist li {
+  padding: 9px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  color: var(--text);
+  font-size: 14px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.playlist li:hover {
+  background: #26263a;
+}
+
+.playlist li.active {
+  background: #2f2a1c;
+  color: var(--amber);
+}
